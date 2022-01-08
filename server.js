@@ -1,12 +1,18 @@
 const http = require('http');
 const products = require('./data/products.json');
 
-// Because we don not specific any method which server can be listen..
-// We are getting those products with all http methods (GET, POST,..)
 const server = http.createServer((req, res) =>{
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify(products)); 
-    // instead res.write(...); res.end(); => res.end(...)
+    // req.url - everything past host (localhost:5000)
+    // wIth this 'localhost:5000/products', we getting 'products'
+    console.log(req.url);
+    if (req.url === '/api/products'){
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(products)); 
+    } else{
+        // with this 'else statement' we solve 'hanging issue'
+        res.writeHead(404, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({msg: "Route Not Found"}));
+    }
 });
 
 const PORT = process.env.PORT || 5000;
