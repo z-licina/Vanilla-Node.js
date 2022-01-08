@@ -1,3 +1,11 @@
-// models deal with all data (database, files,etc.)
+const products = require('../data/products.json');
 
-// functions like: getData, updateDate, createData
+function findAll(){
+    return new Promise((resolve, reject) =>{
+        resolve(products);
+    })
+}
+
+module.exports = {
+    findAll
+}

@@ -1,11 +1,10 @@
 const http = require('http');
-const products = require('./data/products.json');
+const {getAll} = require('./controllers/productController.js');
 
 const server = http.createServer((req, res) =>{
     console.log(req.url);
     if (req.url === '/api/products' && req.method === 'GET'){
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify(products)); 
+        getAll(req, res);
     } else{
         res.writeHead(404, {'Content-Type': 'application/json'});
         res.end(JSON.stringify({msg: "Route Not Found"}));
