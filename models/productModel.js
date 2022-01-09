@@ -23,9 +23,18 @@ function createOne(product){
         resolve(product);
     })
 }
+function updateOne(updateProduct, id){
+    return new Promise((resolve, reject) =>{
+        const i = products.findIndex((temp) => temp.id === id);
+        products[i] = updateProduct;
+        writeDataToFile(path.join(__dirname, '../data', 'products.json').toString(), products);
+        resolve(updateProduct);
+    })
+}
 
 module.exports = {
     findAll,
     findById,
-    createOne
+    createOne,
+    updateOne
 }
