@@ -1,4 +1,4 @@
-const products = require('../data/products.json');
+var products = require('../data/products.json');
 const {v4: uuidv4 } = require('uuid');
 const path = require('path');
 
@@ -25,10 +25,17 @@ function createOne(product){
 }
 function updateOne(updateProduct, id){
     return new Promise((resolve, reject) =>{
-        const i = products.findIndex((temp) => temp.id === id);
-        products[i] = updateProduct;
-        writeDataToFile(path.join(__dirname, '../data', 'products.json').toString(), products);
+        let array = products;
+        array.filter((temp) => temp.id === id);
+        writeDataToFile(path.join(__dirname, '../data', 'products.json').toString(), array);
         resolve(updateProduct);
+    })
+}
+function removeOne(id){
+    return new Promise((resolve, reject) =>{
+        products = products.filter((temp) => temp.id !== id);
+        writeDataToFile(path.join(__dirname, '../data', 'products.json').toString(), products);
+        resolve();
     })
 }
 
@@ -36,5 +43,6 @@ module.exports = {
     findAll,
     findById,
     createOne,
-    updateOne
+    updateOne,
+    removeOne
 }
